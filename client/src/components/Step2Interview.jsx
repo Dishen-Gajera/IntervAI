@@ -26,8 +26,6 @@ function Step2Interview({ interviewData, onFinish }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [voiceGender, setVoiceGender] = useState("female")
   const [subtitle, setSubtitle] = useState("");
-  const [isReadyToStart, setIsReadyToStart] = useState(false);
-
 
   const videoRef = useRef(null);
 
@@ -107,7 +105,7 @@ function Step2Interview({ interviewData, onFinish }) {
   }
 
   useEffect(() => {
-    if (!selectedVoice || !isReadyToStart) {
+    if (!selectedVoice) {
       return;
     }
 
@@ -131,7 +129,7 @@ function Step2Interview({ interviewData, onFinish }) {
     }
     runIntro();
 
-  }, [selectedVoice, isIntroPhase, currentIndex, isReadyToStart])
+  }, [selectedVoice, isIntroPhase, currentIndex])
 
   useEffect(() => {
     if (isIntroPhase) return;
@@ -266,37 +264,6 @@ function Step2Interview({ interviewData, onFinish }) {
       window.speechSynthesis.cancel();
     }
   }, []);
-
-
-  if (!isReadyToStart) {
-    return (
-      <div className='min-h-screen bg-emerald-50 flex items-center justify-center p-4'>
-        <motion.button
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => {
-            // Ensure voices are loaded
-            const voices = window.speechSynthesis.getVoices();
-            const speakDummy = () => {
-              const unlockMsg = new SpeechSynthesisUtterance("ready");
-              unlockMsg.volume = 0;
-              window.speechSynthesis.speak(unlockMsg);
-              setIsReadyToStart(true);
-            };
-            if (voices.length === 0) {
-              window.speechSynthesis.onvoiceschanged = speakDummy;
-            } else {
-              speakDummy();
-            }
-          }}
-          className='bg-emerald-600 text-white px-10 py-5 rounded-full text-xl font-bold shadow-2xl hover:bg-emerald-700 transition'
-        >
-          Tap to Begin Interview
-        </motion.button>
-      </div>
-    );
-  }
 
   return (
     <div className='min-h-screen bg-linear-to-br from bg-emerald-50 via-white to-teal-100 flex items-center justify-center p-4 sm:p-6'>
