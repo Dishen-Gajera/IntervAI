@@ -274,10 +274,14 @@ function Step2Interview({ interviewData, onFinish }) {
           animate={{ scale: 1, opacity: 1 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => {
-            const unlockMsg = new SpeechSynthesisUtterance("ready");
-            unlockMsg.volume = 0;
+            // Speak a real word at normal volume to guarantee the browser unlocks
+            const unlockMsg = new SpeechSynthesisUtterance("Starting.");
             window.speechSynthesis.speak(unlockMsg);
-            setIsReadyToStart(true);
+
+            // Wait exactly 1 second before starting the main AI intro
+            setTimeout(() => {
+              setIsReadyToStart(true);
+            }, 1000);
           }}
           className='bg-emerald-600 text-white px-10 py-5 rounded-full text-xl font-bold shadow-2xl hover:bg-emerald-700 transition'
         >
