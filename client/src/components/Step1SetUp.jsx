@@ -45,19 +45,12 @@ function Step1SetUp({ onStart }) {
 
   const handleStart = async (req, res) => {
     try {
-      const msg = new SpeechSynthesisUtterance("");
-      msg.volume = 0; // Set volume to 0 just to be safe
-      window.speechSynthesis.speak(msg);
-
-      // 🎤 2. Ask microphone permission
-      await navigator.mediaDevices.getUserMedia({ audio: true });
       setLoading(true);
       const result = await axios.post(serverUrl + "/api/interview/generate-questions", { role, experience, mode, resumeText, projects, skills }, { withCredentials: true });
       console.log(result.data);
       if (userData) {
         dispatch(setUserData({ ...userData, credits: result.data.creditsLeft }))
       }
-
 
       setLoading(false);
       onStart(result.data);
