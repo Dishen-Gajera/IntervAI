@@ -270,15 +270,7 @@ function Step2Interview({ interviewData, onFinish }) {
   if (!isReadyToStart) {
     
      return (
-    <div className='min-h-screen bg-linear-to-br from bg-emerald-50 via-white to-teal-100 flex items-center justify-center p-4 sm:p-6'>
-        <motion.button
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => {
-         // Speak a tiny silent word right on click
-            const unlockMsg = new SpeechSynthesisUtterance("ready");
-            unlockMsg.volume = 0;
+    
             window.speechSynthesis.speak(unlockMsg);
             
             setIsReadyToStart(true);
