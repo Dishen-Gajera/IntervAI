@@ -4,7 +4,7 @@ import razorpay from "../services/razorpay.service.js";
 import crypto from "crypto";
 
 export const createOrder = async (req, res) => {
-console.log("come");
+
     try {
         if (!req.userId) {
             return res.status(401).json({ message: "User not login" });
@@ -44,8 +44,8 @@ export const verifyPayment = async (req, res) => {
     try {
         const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
 
-        if(!razorpay_order_id || !razorpay_payment_id || !razorpay_signature){
-            return res.status(400).json({message:"Missing some information"})
+        if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
+            return res.status(400).json({ message: "Missing some information" })
         }
 
         const body = razorpay_order_id + "|" + razorpay_payment_id;
@@ -70,9 +70,9 @@ export const verifyPayment = async (req, res) => {
         const updateUser = await User.findByIdAndUpdate(payment.userId, { $inc: { credits: payment.credits } }, { new: true });
 
         return res.status(200).json({
-            success:true,
-            message:"payment varify and credit added",
-            user:updateUser
+            success: true,
+            message: "payment varify and credit added",
+            user: updateUser
         })
 
     } catch (error) {
