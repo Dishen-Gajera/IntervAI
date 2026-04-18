@@ -17,7 +17,6 @@ function Step2Interview({ interviewData, onFinish }) {
   const [isMicOn, setIsMicOn] = useState(true);
   const recognitionRef = useRef(null);
   const [isAIPlaying, setIsAiPlaying] = useState(false);
-  const [isReadyToStart, setIsReadyToStart] = useState(false);
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answer, setAnswer] = useState("");
@@ -27,6 +26,8 @@ function Step2Interview({ interviewData, onFinish }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [voiceGender, setVoiceGender] = useState("female")
   const [subtitle, setSubtitle] = useState("");
+  const [isReadyToStart, setIsReadyToStart] = useState(false);
+
 
   const videoRef = useRef(null);
 
@@ -266,6 +267,7 @@ function Step2Interview({ interviewData, onFinish }) {
     }
   }, []);
 
+
   if (!isReadyToStart) {
     return (
       <div className='min-h-screen bg-emerald-50 flex items-center justify-center p-4'>
@@ -274,14 +276,19 @@ function Step2Interview({ interviewData, onFinish }) {
           animate={{ scale: 1, opacity: 1 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => {
-            // Speak a real word at normal volume to guarantee the browser unlocks
-            const unlockMsg = new SpeechSynthesisUtterance("Starting.");
-            window.speechSynthesis.speak(unlockMsg);
-
-            // Wait exactly 1 second before starting the main AI intro
-            setTimeout(() => {
+            // Ensure voices are loaded
+            const voices = window.speechSynthesis.getVoices();
+            const speakDummy = () => {
+              const unlockMsg = new SpeechSynthesisUtterance("ready");
+              unlockMsg.volume = 0;
+              window.speechSynthesis.speak(unlockMsg);
               setIsReadyToStart(true);
-            }, 1000);
+            };
+            if (voices.length === 0) {
+              window.speechSynthesis.onvoiceschanged = speakDummy;
+            } else {
+              speakDummy();
+            }
           }}
           className='bg-emerald-600 text-white px-10 py-5 rounded-full text-xl font-bold shadow-2xl hover:bg-emerald-700 transition'
         >
@@ -290,8 +297,6 @@ function Step2Interview({ interviewData, onFinish }) {
       </div>
     );
   }
-
-
 
   return (
     <div className='min-h-screen bg-linear-to-br from bg-emerald-50 via-white to-teal-100 flex items-center justify-center p-4 sm:p-6'>
