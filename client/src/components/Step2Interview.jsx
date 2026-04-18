@@ -17,6 +17,7 @@ function Step2Interview({ interviewData, onFinish }) {
   const [isMicOn, setIsMicOn] = useState(true);
   const recognitionRef = useRef(null);
   const [isAIPlaying, setIsAiPlaying] = useState(false);
+  const [isReadyToStart, setIsReadyToStart] = useState(false);
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answer, setAnswer] = useState("");
@@ -28,7 +29,6 @@ function Step2Interview({ interviewData, onFinish }) {
   const [subtitle, setSubtitle] = useState("");
 
   const videoRef = useRef(null);
-  const [isReadyToStart,setIsReadyToStart]=useState(false)
 
   const currnetQuestion = questions[currentIndex];
 
@@ -130,7 +130,7 @@ function Step2Interview({ interviewData, onFinish }) {
     }
     runIntro();
 
-  }, [selectedVoice, isIntroPhase, currentIndex,isReadyToStart])
+  }, [selectedVoice, isIntroPhase, currentIndex, isReadyToStart])
 
   useEffect(() => {
     if (isIntroPhase) return;
@@ -266,13 +266,17 @@ function Step2Interview({ interviewData, onFinish }) {
     }
   }, []);
 
- 
   if (!isReadyToStart) {
-    
-     return (
-    
+    return (
+      <div className='min-h-screen bg-emerald-50 flex items-center justify-center p-4'>
+        <motion.button
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => {
+            const unlockMsg = new SpeechSynthesisUtterance("ready");
+            unlockMsg.volume = 0;
             window.speechSynthesis.speak(unlockMsg);
-            
             setIsReadyToStart(true);
           }}
           className='bg-emerald-600 text-white px-10 py-5 rounded-full text-xl font-bold shadow-2xl hover:bg-emerald-700 transition'
@@ -283,9 +287,7 @@ function Step2Interview({ interviewData, onFinish }) {
     );
   }
 
-  // Your existing return block starts here...
-  return (
-    <div className='min-h-screen bg-linear-to-br from bg-emerald-50...
+
 
   return (
     <div className='min-h-screen bg-linear-to-br from bg-emerald-50 via-white to-teal-100 flex items-center justify-center p-4 sm:p-6'>
