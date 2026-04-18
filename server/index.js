@@ -12,7 +12,7 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: "https://intervai-client-ai.onrender.com",
     credentials: true
 }))
 
@@ -29,6 +29,6 @@ app.use("/api/payment", paymentRouter);
 const PORT = process.env.PORT || 8000;
 
 app.listen(PORT, () => {
-    console.log("server started"+PORT);
+    console.log("server started" + PORT);
     connectDb()
 })

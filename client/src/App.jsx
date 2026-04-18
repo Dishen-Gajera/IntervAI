@@ -11,7 +11,7 @@ import Pricing from './pages/Pricing'
 import InterviewReport from './pages/InterviewReport'
 import { motion } from 'motion/react'
 import { HiSparkles } from 'react-icons/hi'
-export const serverUrl = "http://localhost:8000"
+export const serverUrl = "https://intervai-server.onrender.com"
 
 function App() {
   const navigate = useNavigate();
