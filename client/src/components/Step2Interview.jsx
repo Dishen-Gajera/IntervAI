@@ -154,7 +154,7 @@ function Step2Interview({ interviewData, onFinish }) {
       setTimeLeft(currnetQuestion.timeLimit || 0);
 
     }
-  }, [currentIndex]);                    
+  }, [currentIndex]);
 
   useEffect(() => {
     if (!("webkitSpeechRecognition" in window)) return;

@@ -51,6 +51,12 @@ function Step1SetUp({ onStart }) {
       if (userData) {
         dispatch(setUserData({ ...userData, credits: result.data.creditsLeft }))
       }
+      // 🎤 1. Ask microphone permission
+      await navigator.mediaDevices.getUserMedia({ audio: true });
+
+      // 🔊 2. Unlock speech (VERY IMPORTANT for mobile)
+      const msg = new SpeechSynthesisUtterance(" ");
+      window.speechSynthesis.speak(msg);
 
       setLoading(false);
       onStart(result.data);
