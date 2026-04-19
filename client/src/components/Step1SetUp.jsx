@@ -159,7 +159,7 @@ function Step1SetUp({ onStart }) {
                 onClick={() => document.getElementById("resumeUpload").click()}
                 className='border-2 border-dashed border-gray-300 rounded-xl p-8 text-center cursor-pointer hover:border-green-500 hover:bg-green-50 transition'>
                 <FaFileUpload className='text-4xl mx-auto text-green-600 mb-3' />
-                <input type="file" id='resumeUpload' accept='application/pdf' className='hidden' onChange={(e) => setResumeFile(e.target.files[0])} />
+                <input type="file" id='resumeUpload' accept='application/pdf' className='hidden max-w-full' onChange={(e) => setResumeFile(e.target.files[0])} />
                 <p className='text-gray-600 font-medium'>{resumeFile ? resumeFile.name : "Click to upload resume (Optional)"}</p>
 
                 {resumeFile && <motion.button
