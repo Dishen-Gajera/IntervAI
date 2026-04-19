@@ -34,7 +34,7 @@ function Step2Interview({ interviewData, onFinish }) {
   useEffect(() => {
     const loadVoice = () => {
       const voices = window.speechSynthesis.getVoices();
-      if (!voices) return;
+      if (!voices || voices.length === 0) return;
 
       const femaleVoice = voices.find(v =>
         v.name.toLocaleLowerCase().includes("zira") || v.name.toLocaleLowerCase().includes('samantha') || v.name.toLocaleLowerCase().includes("female")
@@ -51,7 +51,7 @@ function Step2Interview({ interviewData, onFinish }) {
 
       if (maleVoice) {
         setVoiceGender("male");
-        setSelectedVoice("male");
+        setSelectedVoice(maleVoice);
         return;
       }
       setSelectedVoice(voices[0]);
