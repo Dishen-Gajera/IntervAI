@@ -24,6 +24,3 @@ The application follows a SaaS-based model with a credit system, where users can
         Animation: Framer Motion
         Deployment: Render
 
-    Purpose
-      This project demonstrates a real-world SaaS application with AI integration, payment systems, authentication, and scalable architecture—making it suitable         for portfolio projects, final-year submissions, and production-level learning.
-
