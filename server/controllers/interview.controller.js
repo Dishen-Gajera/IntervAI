@@ -328,7 +328,7 @@ export const finishInterview = async (req, res) => {
         interview.questions.forEach((q) => {
             totalScore += q.score || 0
             totalCommunication += q.communication || 0
-            totalConfidence += q.communication || 0
+            totalConfidence += q.confidence || 0
             totalCorrectness += q.correctness || 0
         });
 
@@ -393,7 +393,7 @@ export const getInterviewReport = async (req, res) => {
         interview.questions.forEach((q) => {
 
             totalCommunication += q.communication || 0
-            totalConfidence += q.communication || 0
+            totalConfidence += q.confidence || 0
             totalCorrectness += q.correctness || 0
         });
 
